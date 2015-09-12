@@ -1,9 +1,18 @@
 .jumbotron2 {
   padding: 30px 25px;
   margin-bottom: 30px;
-  margin-top: 10px;
+  margin-top: 20px;
   color: inherit;
   background-color: #eee;
-  border-radius: 25px
-  
+  border-style: groove;
+  border-color: #669999;
+  border-radius: 25px;
+  border-width: 5px;
+}
+
+.col-lg-monkey {
+  position: relative;
+  min-height: 1px;
+  padding-right: 15px;
+  padding-left: 30px;
 }
