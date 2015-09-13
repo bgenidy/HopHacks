@@ -1,0 +1,9 @@
+File:         C:\Users\Victoria\Desktop\hpph\python\tempSong\Katy_Perry_Birthday.mp3
+Artist:       Katy Perry
+Title:        Birthday
+Track ID:     TRWEWWN14FC5229F48
+Tempo:        126.002
+Energy:       0.678 ===================================================================
+Valence:      0.819 =================================================================================
+Acousticness: 0.076 =======
+

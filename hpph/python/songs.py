@@ -48,3 +48,5 @@ if __name__ == '__main__':
         print 'usage: python songs.py path'
     else:
         show_attrs(sys.argv[1])
+	os.system("echo hi > C:\\Users\\Victoria\\Desktop\\hpph\\python\\finished.txt");
+	os.system("del /Q C:\\Users\\Victoria\\Desktop\\hpph\\python\\tempSong\\*")

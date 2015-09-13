@@ -1,13 +1,8 @@
+import java.io.BufferedReader;
 import java.io.File;
-import java.util.Map;
-
+import java.io.FileReader;
 //import com.google.appengine.repackaged.org.json.JSONArray; 
-
 import javax.swing.JFileChooser;
-
-import com.echonest.api.v4.EchoNestAPI;
-import com.echonest.api.v4.EchoNestException;
-import com.echonest.api.v4.Song;
 
 public class FileCheck {
 	
@@ -69,7 +64,38 @@ public class FileCheck {
 		}
 		//GFQ8MTPXM4MYHFMTU
 		else if(num==1){
+			int limit = 0;
+			ProcessBuilder pb = new ProcessBuilder("/Python27/python.exe", "/Users/Victoria/Desktop/hpph/python/automate.py",
+					path);
 			
+			try{
+				Process p = pb.start();
+				
+				File f = new File("/Users/Victoria/Desktop/hpph/python/finished.txt");
+				while(!f.exists() && limit < 8){
+					Thread.sleep(5000); //5 seconds
+					limit += 1;
+				}
+				if(f.exists()){
+					f.delete();
+					String line = null;
+					FileReader fr = new FileReader("/Users/Victoria/Desktop/hpph/python/returnData.txt");
+					BufferedReader br = new BufferedReader(fr);
+					
+					while((line=br.readLine()) != null){
+						if(line.contains("Artist:")){
+							data[0] = line;
+						}else if(line.contains("Title:")){
+							data[1] = line;
+						}else if(line.contains("Track ID:")){
+							data[2]=line;
+						}
+					}
+				}
+				
+			}catch(Exception e){
+				e.printStackTrace();
+			}
 		}
 		else{
 			data[0] = path;
@@ -80,6 +106,39 @@ public class FileCheck {
 				data[4] = "We Have Deemed that this File is Malicious\nPlease Do Not Use";
 			}else{
 				data[4] = "According To Our Analysis Of millions of Malicious Software\nWe believe that the following file is safe";
+			}
+			
+			//Song Crap
+			int limit = 0;
+			ProcessBuilder pb = new ProcessBuilder("/Python27/python.exe", "/Users/Victoria/Desktop/hpph/python/automate.py",
+					path);
+			try{
+				Process p = pb.start();
+				
+				File f = new File("/Users/Victoria/Desktop/hpph/python/finished.txt");
+				while(!f.exists() && limit < 6){
+					Thread.sleep(5000); //5 seconds
+					limit += 1;
+				}
+				if(f.exists()){
+					f.delete();
+					String line = null;
+					FileReader fr = new FileReader("/Users/Victoria/Desktop/hpph/python/returnData.txt");
+					BufferedReader br = new BufferedReader(fr);
+					
+					while((line=br.readLine()) != null){
+						if(line.contains("Artist:")){
+							data[5] = line;
+						}else if(line.contains("Title:")){
+							data[6] = line;
+						}else if(line.contains("Track ID:")){
+							data[7]=line;
+						}
+					}
+				}
+				
+			}catch(Exception e){
+				e.printStackTrace();
 			}
 
 		}

@@ -129,7 +129,7 @@ public class Gui {
 		FileScan.setBackground(new Color(255, 222, 173));
 		FileScan.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String m = parseString(FileCheck.rawAnalysis(path,0));
+				String m = parseString(FileCheck.rawAnalysis(fileChooser.getSelectedFile().getAbsolutePath(),0));
 				textresult.setText(m);
 				panel.add(textresult);
 				panel_main.setVisible(false);
@@ -143,7 +143,7 @@ public class Gui {
 		SongScan.setBackground(new Color(255, 222, 173));
 		SongScan.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String m = parseString(FileCheck.rawAnalysis(path,1));
+				String m = parseString(FileCheck.rawAnalysis(fileChooser.getSelectedFile().getAbsolutePath(),1));
 				textresult.setText(m);
 				panel.add(textresult);
 				panel_main.setVisible(false);
@@ -157,7 +157,7 @@ public class Gui {
 		both.setBackground(new Color(255, 222, 173));
 		both.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String m = parseString(FileCheck.rawAnalysis(path,2));
+				String m = parseString(FileCheck.rawAnalysis(fileChooser.getSelectedFile().getAbsolutePath(),2));
 				textresult.setText(m);
 				panel.add(textresult);
 				panel_main.setVisible(false);
@@ -175,4 +175,5 @@ public class Gui {
 		}
 		return x;
 	}
+	 
 }
