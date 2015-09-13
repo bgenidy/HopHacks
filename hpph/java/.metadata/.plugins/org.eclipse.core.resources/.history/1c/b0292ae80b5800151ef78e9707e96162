@@ -1,0 +1,33 @@
+import java.util.Scanner;
+
+public class HexToAscii {
+	public static void main(String[] args){
+		Scanner sc = new Scanner(System.in);
+		
+		System.out.print("Please Enter you Hex String Here or Press 1 for "
+				+ "the Default Home Work Assignment: ");
+		String hex = sc.nextLine();
+		if(hex.equals("1")){
+			defaultAnswer("",true);
+		}
+		else{
+			defaultAnswer(hex, false);
+		}
+		
+	}
+	
+	public static void defaultAnswer(String hex, boolean def){
+		ASCIITable x = new ASCIITable();
+		String hexAnswers = "";
+		
+		for(int i=0; i<hex.length(); i+=2){
+			hexAnswers+=x.getChar(hex.substring(i,i+2));
+		}
+		
+		System.out.println("Your Question Was \""+hexAnswers+"\"");
+		
+		if(def){
+			System.out.println("My Last Name is Private but for you its \"Genidy\"");
+		}
+	}
+}

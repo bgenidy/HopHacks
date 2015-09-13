@@ -1,0 +1,7 @@
+import java.util.Scanner;
+
+public class HexToAscii {
+	Scanner sc = new Scanner(System.in);
+	
+	System.out.print("Please Enter Your One Line Hex to Be Converted to ASCII:");
+}

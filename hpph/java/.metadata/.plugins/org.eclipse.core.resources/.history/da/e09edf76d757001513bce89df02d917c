@@ -1,0 +1,14 @@
+import java.util.Scanner;
+
+public class IntegerToHex {
+	public static void main(String[] args){
+		Scanner sc = new Scanner(System.in);
+		String one = sc.next();
+		String two = sc.next();
+		
+		one =""+ Integer.valueOf(String.valueOf(one), 16);
+		two = ""+ Integer.valueOf(String.valueOf(two), 16);
+		System.out.println(one + ""+ two);
+		
+	}
+}

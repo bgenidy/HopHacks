@@ -1,0 +1,13 @@
+----------------------------------------------------------------
+Sat Sep 12 11:51:04 PDT 2015:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.11.1.1 - (1616546): instance a816c00e-014f-c2e5-8011-000002401ad0 
+on database directory /home/ubuntu/workspace/java/HopHacks/db_hashTable with class loader sun.misc.Launcher$AppClassLoader@4e0e2f2a 
+Loaded from file:/home/ubuntu/Desktop/db-derby-10.11.1.1-bin/lib/derby.jar
+java.vendor=Oracle Corporation
+java.runtime.version=1.8.0_60-b27
+user.dir=/home/ubuntu/workspace/java/HopHacks
+os.name=Linux
+os.arch=amd64
+os.version=3.19.0-28-generic
+derby.system.home=null
+Database Class Loader started - derby.database.classpath=''

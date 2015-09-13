@@ -1,0 +1,16 @@
+import java.util.Scanner;
+
+public class HexToAscii {
+	public static void main(String[] args){
+		Scanner sc = new Scanner(System.in);
+		
+		System.out.print("Please Enter you Hex String Here: ");
+		String hex = sc.nextLine();
+		int j = hex.charAt(1)+hex.charAt(2);
+		System.out.println(j+""+hex.charAt(1)+""+hex.charAt(2));
+		//for(int i=0; i<hex.length(); i+=2){
+			
+		//}
+		
+	}
+}

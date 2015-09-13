@@ -1,0 +1,149 @@
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
+
+public class DB {
+	private final String DB_NAME = "db_hashTable";//database that is used for all clients
+	
+	private Connection conn1;//used to open the database
+	private Statement sta;//used to execute sql queries
+	private ResultSet res;//used to store the results of an sql querie
+	/*
+	public boolean init(){
+		try{
+			String dbURL = "jdbc:derby:."+File.separator+DB_NAME+";create=true;"
+					+"encryptionKeyLength=256;encryptionAlgorithm=AES/CBC/NoPadding;";
+			
+			conn1 = DriverManager.getConnection(dbURL);
+			System.out.println("success");
+			
+			return true;
+		}catch(Exception e){
+			e.printStackTrace();
+			return false;
+		}
+	}
+
+	public boolean createTable(){
+		String sqlStatment = "CREATE TABLE badhash (hash VARCHAR(50) NOT NULL)";
+		
+		try{
+			sta.executeUpdate(sqlStatment);
+			return true;
+		}
+		catch(Exception e){
+			e.printStackTrace();
+			return false;
+		}
+	}
+*/	
+	
+	public boolean connect(){
+		try{
+			String dbURL = "jdbc:derby:./"+DB_NAME+";"
+					+"encryptionKeyLength=256;encryptionAlgorithm=AES/CBC/NoPadding;";
+			
+			conn1 = DriverManager.getConnection(dbURL);
+			sta = conn1.createStatement();
+			return true;
+		}catch(Exception e){
+			e.printStackTrace();
+			System.out.println("Failure Connecting");
+			return false;
+		}
+	}
+	
+
+	public boolean close(){
+		try{
+			sta.close();
+			conn1.close();
+			return true;
+		}catch(Exception e){
+			e.printStackTrace();
+			System.out.println("Failure Closing");
+			return false;
+		}
+	}
+	
+	public void putInDB(){
+		// The name of the file to open.
+        String fileName = "/home/ubuntu/Desktop/hophacks/HopHacks/local_compute/checksums/ALL_HASHES";
+
+        // This will reference one line at a time
+        String line = null;
+
+        try {
+            // FileReader reads text files in the default encoding.
+            FileReader fileReader = 
+                new FileReader(fileName);
+
+            // Always wrap FileReader in BufferedReader.
+            BufferedReader bufferedReader = 
+                new BufferedReader(fileReader);
+
+            while((line = bufferedReader.readLine()) != null) {
+                if(!line.contains("#")){
+                	insert(line);
+                }
+            }   
+
+            // Always close files.
+            bufferedReader.close();         
+        }
+        
+        catch(Exception e){
+        	e.printStackTrace();
+        }
+	}
+	
+	
+	//Insert A Hash Inside a DB
+	public boolean insert(String h){
+		String sqlStatement = "INSERT INTO badhash (hash) VALUES ('"+h+"')";
+		try{
+			sta.executeUpdate(sqlStatement);
+			System.out.println(h);
+			return true;
+		}
+		catch(Exception e){
+			e.printStackTrace();
+			return false;
+		}
+	}
+	
+	//Returns true if hash exists otherwise returns false
+	public boolean check(String h){
+		String sqlStatment = "SELECT hash FROM badhash WHERE hash='"+h+"'";
+		boolean x = false;
+	
+		try{
+			res = sta.executeQuery(sqlStatment);
+			System.out.println(res.getString("hash"));
+			String answer = res.getString(0);
+			if(answer !=null){
+				if(answer.equals(h)){
+					x=true;
+				}
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		finally{
+			try{res.close();}catch(Exception e){}
+		}
+		
+		return x;
+	}
+	
+	public static void main(String[] args){
+		DB x = new DB();
+		x.connect();
+		x.putInDB();
+		x.close();
+	}
+
+}

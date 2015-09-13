@@ -1,0 +1,181 @@
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileReader;
+import java.io.InputStream;
+import java.security.MessageDigest;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
+
+public class DB {
+	private final String DB_NAME = "db_hashTable";//database that is used for all clients
+	
+	private Connection conn1;//used to open the database
+	private Statement sta;//used to execute sql queries
+	private ResultSet res;//used to store the results of an sql querie
+	/*
+	public boolean init(){
+		try{
+			String dbURL = "jdbc:derby:."+File.separator+DB_NAME+";create=true;"
+					+"encryptionKeyLength=256;encryptionAlgorithm=AES/CBC/NoPadding;";
+			
+			conn1 = DriverManager.getConnection(dbURL);
+			System.out.println("success");
+			
+			return true;
+		}catch(Exception e){
+			e.printStackTrace();
+			return false;
+		}
+	}
+
+	public boolean createTable(){
+		String sqlStatment = "CREATE TABLE badhash (hash VARCHAR(50) NOT NULL)";
+		
+		try{
+			sta.executeUpdate(sqlStatment);
+			return true;
+		}
+		catch(Exception e){
+			e.printStackTrace();
+			return false;
+		}
+	}
+*/	
+	
+	public boolean connect(){
+		try{
+			String dbURL = "jdbc:derby:./"+DB_NAME+";"
+					+"encryptionKeyLength=256;encryptionAlgorithm=AES/CBC/NoPadding;";
+			
+			conn1 = DriverManager.getConnection(dbURL);
+			sta = conn1.createStatement();
+			return true;
+		}catch(Exception e){
+			e.printStackTrace();
+			System.out.println("Failure Connecting");
+			return false;
+		}
+	}
+	
+
+	public boolean close(){
+		try{
+			sta.close();
+			conn1.close();
+			return true;
+		}catch(Exception e){
+			e.printStackTrace();
+			System.out.println("Failure Closing");
+			return false;
+		}
+	}
+	
+	private void putInDB(){
+		// The name of the file to open.
+        String fileName = "/home/ubuntu/Desktop/hophacks/HopHacks/local_compute/checksums/ALL_HASHES";
+
+        // This will reference one line at a time
+        String line = null;
+
+        try {
+            // FileReader reads text files in the default encoding.
+            FileReader fileReader = 
+                new FileReader(fileName);
+
+            // Always wrap FileReader in BufferedReader.
+            BufferedReader bufferedReader = 
+                new BufferedReader(fileReader);
+
+            while((line = bufferedReader.readLine()) != null) {
+                if(!line.contains("#")){
+                	insert(line);
+                }
+            }   
+
+            // Always close files.
+            bufferedReader.close();         
+        }
+        
+        catch(Exception e){
+        	e.printStackTrace();
+        }
+	}
+	
+	//If its true then yes its bad otherwise its good
+	public boolean isFileMalicious(String path){
+		try{
+			String temp = getMD5Checksum(path);
+			System.out.println(temp);
+			return check(temp);
+		}catch(Exception e){return false;}
+		
+	}
+	
+	//Insert A Hash Inside a DB
+	private boolean insert(String h){
+		String sqlStatement = "INSERT INTO badhash (hash) VALUES ('"+h+"')";
+		try{
+			sta.executeUpdate(sqlStatement);
+			System.out.println(h);
+			return true;
+		}
+		catch(Exception e){
+			e.printStackTrace();
+			return false;
+		}
+	}
+	
+	//Returns true if hash exists otherwise returns false
+	private boolean check(String h){
+		String sqlStatment = "SELECT hash FROM badhash WHERE hash='"+h+"'";
+		boolean x = false;
+	
+		try{
+			res = sta.executeQuery(sqlStatment);
+			if(res.next()){
+				String answer = res.getString("hash");
+				x = true;
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		finally{
+			try{res.close();}catch(Exception e){}
+		}
+		
+		return x;
+	}
+	
+	
+	public String getMD5Checksum(String filename) throws Exception {
+	       byte[] b = createChecksum(filename);
+	       String result = "";
+
+	       for (int i=0; i < b.length; i++) {
+	           result += Integer.toString( ( b[i] & 0xff ) + 0x100, 16).substring( 1 );
+	       }
+	       return result;
+	 }
+
+
+	private byte[] createChecksum(String filename) throws Exception {
+	       InputStream fis =  new FileInputStream(filename);
+
+	       byte[] buffer = new byte[1024];
+	       MessageDigest complete = MessageDigest.getInstance("MD5");
+	       int numRead;
+
+	       do {
+	           numRead = fis.read(buffer);
+	           if (numRead > 0) {
+	               complete.update(buffer, 0, numRead);
+	           }
+	       } while (numRead != -1);
+
+	       fis.close();
+	       return complete.digest();
+	   }
+
+}

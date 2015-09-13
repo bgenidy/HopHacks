@@ -1,0 +1,44 @@
+import java.io.File;
+
+import javax.swing.JFileChooser;
+
+public class FileCheck {
+	
+	public String fileType(String path){
+	    JFileChooser chooser = new JFileChooser();
+	    File file = new File(path);
+	    String fileTypeName ="";
+	    
+	    try{
+	    	fileTypeName = file.toURI().toURL().openConnection().getContentType();
+	    }catch(Exception e){}
+	    
+	    return fileTypeName;
+	  }
+	
+	private String fileSize(String path){
+		File file = new File(path);
+		String value = file.length()+ " "+ "(Bytes)";
+		return value;
+	}
+	
+	private String md5(String path){
+		DB x = new DB();
+		String md5hash = "";
+		try{
+			md5hash = x.getMD5Checksum(path);
+		}catch(Exception e){}
+		
+		return md5hash;
+	}
+	
+	private boolean maliciousFile(String path){
+		return new DB().isFileMalicious(path);
+	}
+	
+	public 
+	
+	public static void main(String[] args){
+		new FileCheck().fileType("/home/ubuntu/Desktop/db-derby-10.11.1.1-bin.zip");
+	}
+}

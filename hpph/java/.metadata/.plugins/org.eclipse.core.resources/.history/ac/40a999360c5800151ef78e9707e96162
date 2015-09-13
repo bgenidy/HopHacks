@@ -1,0 +1,20 @@
+import java.util.Scanner;
+
+public class IntegerToHex {
+	public static void main(String[] args){
+		Scanner sc = new Scanner(System.in);
+		
+		System.out.print("Please Enter the two Integers with a space in between: ");
+		int one = sc.nextInt();
+		int two = sc.nextInt();
+		String a = Integer.toHexString(one);
+		String b = Integer.toHexString(two);
+		int sum = one+two;
+		String ab = Integer.toHexString(sum);
+		
+		String badding = "0x00000000";
+		ab = badding.substring(0,badding.length()-ab.length())+ab;
+		System.out.println("The Sum is: "+ab);
+	}
+	
+}

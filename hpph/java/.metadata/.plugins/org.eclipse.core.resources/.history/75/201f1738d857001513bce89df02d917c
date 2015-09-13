@@ -1,0 +1,16 @@
+import java.util.Scanner;
+
+public class IntegerToHex {
+	public static void main(String[] args){
+		Scanner sc = new Scanner(System.in);
+		int one = sc.nextInt();
+		int two = sc.nextInt();
+		String a = Integer.toHexString(one);
+		String b = Integer.toHexString(two);
+		int sum = one+two;
+		String ab = Integer.toHexString(sum);
+		System.out.println("The Sum is: "+Integer.decode(ab));
+		
+	}
+	
+}

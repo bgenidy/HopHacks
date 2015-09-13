@@ -1,0 +1,95 @@
+import javax.swing.JPanel;
+import javax.swing.JButton;
+import javax.swing.BoxLayout;
+import javax.swing.JTextArea;
+import java.awt.Font;
+import java.awt.Color;
+import javax.swing.JFileChooser;
+import javax.swing.border.CompoundBorder;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import java.io.File;
+import javax.swing.JLayeredPane;
+import javax.swing.border.EtchedBorder;
+
+public class hophack2 extends JPanel {
+	private final JFileChooser fileChooser_1 = new JFileChooser();
+	private File upload;
+	private String path = "";
+	/**
+	 * Create the panel.
+	 */
+	public hophack2() {
+		setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
+		
+		JPanel panel = new JPanel();
+		panel.setBorder(new CompoundBorder());
+		panel.setBackground(new Color(204, 255, 204));
+		add(panel);
+		panel.setLayout(null);
+		
+		JTextArea chooseFile = new JTextArea("Choose a file, then select the process you want to run.");
+		chooseFile.setForeground(new Color(0, 0, 51));
+		chooseFile.setBackground(new Color(255, 255, 153));
+		chooseFile.setLineWrap(true);
+		chooseFile.setFont(new Font("SansSerif", Font.BOLD, 14));
+		chooseFile.setEditable(false);
+		chooseFile.setRows(2);
+		chooseFile.setBounds(27, 101, 391, 31);
+		panel.add(chooseFile);
+		
+		JButton FileScan = new JButton("File Scan");
+		FileScan.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				//method goes here: String[5] text = METHODNAME(path, 0);
+				//FileCheck.rawAnalysis(path,0);
+				JLayeredPane layeredPane = new JLayeredPane();
+				layeredPane.setBackground(new Color(204, 204, 255));
+				layeredPane.setBorder(new CompoundBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(64, 64, 64), null), null));
+				layeredPane.setBounds(91, 32, 257, 236);
+				panel.add(layeredPane);
+				String s = "";
+				/*for(int i = 0; i < 5;i++) {
+					s = s + "\n" + text[i];
+				}*/
+				JTextArea textArea = new JTextArea(s);
+				textArea.setBounds(85, 26, 251, 230);
+				panel.add(textArea);
+			}
+		});
+		FileScan.setBounds(81, 191, 89, 23);
+		panel.add(FileScan);
+		
+		JButton SongCheck = new JButton("Song Scan");
+		SongCheck.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				//call method here: METHODNAME(path, 1);
+				//FileCheck.rawAnalysis(path,1);
+				
+			}
+		});
+		SongCheck.setBounds(180, 191, 89, 23);
+		panel.add(SongCheck);
+		
+		JButton both = new JButton("Both");
+		both.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				//call method here: METHODNAME(path, 2);
+				//FileCheck.rawAnalysis(path,2);
+			}
+		});
+		both.setBounds(279, 191, 89, 23);
+		panel.add(both);
+		
+		fileChooser_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				upload = fileChooser_1.getSelectedFile();
+				path = upload.getAbsolutePath();
+			}
+		});
+		fileChooser_1.setMultiSelectionEnabled(true);
+		fileChooser_1.setBounds(77, 149, 291, 31);
+		panel.add(fileChooser_1);
+
+	}
+}
